@@ -1,36 +1,30 @@
 from dataclasses import field
 from statistics import mode
+from rest_framework import serializers  # Import serializers from Django REST Framework
+from MyApps.payments.models import Payment  # Import the Payment model
 
-from rest_framework import serializers
-from MyApps.payments.models import Payment
+"""
+The above imports are essential for creating a serializer for the Payment model.
+- from rest_framework import serializers: This imports the serializers module from Django REST Framework, which is used to convert complex data types (like model instances) into native Python data types that can then be easily rendered into JSON or other content types.
+- from MyApps.payments.models import Payment: This imports the Payment model, which you will serialize.
+"""
 
 class PaymentSerializer(serializers.ModelSerializer):
-    # len_first_nameCliente = serializers.SerializerMethodField()
+    # len_first_nameCliente = serializers.SerializerMethodField()  # Example of a custom field (commented out)
+    
+    """
+    The PaymentSerializer class is defined here, inheriting from serializers.ModelSerializer.
+    This provides a convenient way to create serializers for Django models.
+    """
+
     class Meta:
-        model = Payment
-        fields = "__all__"
-        # exclude = ['passwordCliente']
-        # fields = (
-        #     'pk',
-        #     'nombreCliente',
-        #     'direccionCliente',
-        #     'telefonoCliente',
-        #     'correoCliente',
-        #     'passwordCliente',
-        # )
+        model = Payment  # Specify the model to serialize
+        fields = "__all__"  # Include all fields in the serialization
 
-    # def get_len_nombreCliente(self, object):
-    #     length = len(object.nombreCliente)
-    #     return length
+"""
+Meta Class:
 
-    # def validate(self, data):
-    #     if data['nombreCliente'] == data['direccionCliente']:
-    #         raise serializers.ValidationError('Nombre y Correo No pueden ser iguales')
-    #     else:
-    #         return data
-
-    #def validate_first_nameClient(self, value):
-    #   if len(value) < 3:
-    #      raise serializers.ValidationError('Nombre no puede ser tan corto')
-    #  else:
-    #       return value
+The Meta class is an inner class that provides configuration options for the serializer.
+model = Payment: This specifies which model the serializer is associated with, in this case, the Payment model.
+fields = "__all__": This indicates that all fields from the Payment model should be included in the serialized output. You can also specify a list of fields explicitly or use exclude to omit specific fields.
+"""

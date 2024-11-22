@@ -1,38 +1,18 @@
 from dataclasses import field
 from statistics import mode
 
-from rest_framework import serializers
-from MyApps.employees.models import Employee
+# Import necessary modules and classes
+from rest_framework import serializers  # Import serializers module from Django REST Framework
+from MyApps.employees.models import Employee  # Import the Employee model from the employees app
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Employee model.
+    """
+    # Uncomment the line below to define a custom field for the length of the first name
     # len_first_nameCliente = serializers.SerializerMethodField()
+
     class Meta:
-        model = Employee
-        fields = "__all__"
-        # exclude = ['passwordCliente']
-        # fields = (
-        #     'pk',
-        #     'nombreCliente',
-        #     'direccionCliente',
-        #     'telefonoCliente',
-        #     'correoCliente',
-        #     'passwordCliente',
-        # )
-
-    # def get_len_nombreCliente(self, object):
-    #     length = len(object.nombreCliente)
-    #     return length
-
-    # def validate(self, data):
-    #     if data['nombreCliente'] == data['direccionCliente']:
-    #         raise serializers.ValidationError('Nombre y Correo No pueden ser iguales')
-    #     else:
-    #         return data
-
-    #def validate_first_nameClient(self, value):
-    #   if len(value) < 3:
-    #       raise serializers.ValidationError('Nombre no puede ser tan corto')
-    #   else:
-    #       return value
-
-   
+        model = Employee  # Specify the model to be serialized
+        fields = "__all__"  # Include all fields from the Employee model in the serialization process
+       

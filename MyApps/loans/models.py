@@ -34,7 +34,10 @@ class Loan(models.Model):
     interest_rate = models.DecimalField(max_digits=5, decimal_places=2) # Interest rate with maximum 5 digits and 2 decimal places   
     disbursement_date = models.DateField(default=now, verbose_name="Current Date") # Disbursement date, defaults to the current date
     due_date = models.DateTimeField(auto_now=True, verbose_name="Due Date")  # Due date, automatically set to the current time
-    employee = models.ManyToManyField(Employee, through='LoanIssued', verbose_name="LoanIssued")  # Many-to-Many relationship with Employee through LoanIssued
+    employee = models.ForeignKey(Employee, 
+                                  null=True,
+                                  blank=True,
+                                  on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')  # Loan status with choices
     loan_type = models.ForeignKey(LoanType,  # Foreign key to LoanType, can be null or blank
                                   null=True,
@@ -48,10 +51,16 @@ class Loan(models.Model):
                                on_delete=models.CASCADE)
 
     # String representation of the Loan object
+    """
+    __str__: Returns the name of the loan type for better readability in the admin interface.
+    """
     def __str__(self):
         return f"Loan {self.id} - {self.client.first_name}"
 
     # Meta class for additional model settings
+    """
+    Defines the singular and plural names for the model in the admin interface.
+    """
     class Meta:
         verbose_name = "Loan"  # Singular form
         verbose_name_plural = "Loans"  # Plural form
